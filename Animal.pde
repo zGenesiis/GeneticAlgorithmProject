@@ -18,15 +18,22 @@ public class Animal {
     translate(pos.x, pos.y);
     rectMode(CENTER);
     rotate(vel.heading());
-    fill(120, 120);
+    fill(#020122, 120);
     rect(0, 0, 25, 10);
     pop();
   }
   
   void update(){
-    vel.add(acc);
-    pos.add(vel);
-    acc.mult(0);
+    if (pos.dist(foodPos) > 25){
+      vel.add(acc);
+      pos.add(vel);
+      acc.mult(0);
+    }
+  }
+  
+  float calcFitness(){
+    float d = pos.dist(foodPos);
+    return 1/d;
   }
   
 }
