@@ -1,18 +1,32 @@
 public class Animal {
   PVector pos;
-  char moveDna[];
-  int colorDna[];
-  
-  public Animal(PVector position, int[] colorDNA){
+  DNA Dna;
+  PVector vel = new PVector(0,0);
+  PVector acc = new PVector(0,0);
+
+  public Animal(PVector position, DNA dna){
     pos = position;
-    colorDna = colorDNA;
+    Dna = dna;
+  }
+  
+  void applyForce(PVector Force){
+    acc.add(Force);
   }
   
   void show(){
     push(); 
+    translate(pos.x, pos.y);
     rectMode(CENTER);
-    fill(colorDna[0], colorDna[1], colorDna[2], 120);
-    rect(pos.x, pos.y, 10, 5);
+    rotate(vel.heading());
+    fill(120, 120);
+    rect(0, 0, 25, 10);
     pop();
   }
+  
+  void update(){
+    vel.add(acc);
+    pos.add(vel);
+    acc.mult(0);
+  }
+  
 }
