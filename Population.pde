@@ -2,7 +2,7 @@ public class Population {
   Animal[] animals;
   int size;
   float[] fitness;
-  Animal[] matingPool;
+  Animal[] matingPool = new Animal[0];
   
   public Population(int sizey){
     size = sizey;
@@ -25,13 +25,13 @@ public class Population {
   void update(){
     for (Animal animal: animals){
       animal.update();
-      animal.Dna.genes[counter].setMag(.3);
-      animal.applyForce(animal.Dna.genes[counter]);
+      PVector gene = animal.Dna.genes[counter];
+      gene.setMag(.3);
+      animal.applyForce(gene);
     }
   }
   
   void newGeneration(){
-    int matingSize = 0;
     
     for (int i = 0;i<size;i++){
       fitness[i] = animals[i].calcFitness();
@@ -39,21 +39,10 @@ public class Population {
     
     for (int j = 0;j<size;j++){
       for (int i = 0;i<fitness[j]*100;i++){
-        matingSize++;
+        matingPool = (Animal[]) append(matingPool, animals[i]);
       }
     }
-    
-    matingPool = new Animal[matingSize];
-    
-    for (int j = 0;j<size;j++){
-      for (int i = 0;i<floor(fitness[j]*100);i++){
-        matingPool[i] = animals[j];
-      }
-    }
-    
-    for (Animal mating: matingPool){
-      println(mating);
-    }
+    println(matingPool.length);
   }
   
 }
